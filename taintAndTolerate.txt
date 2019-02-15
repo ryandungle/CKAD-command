@@ -1,0 +1,25 @@
+taints node
+kubectl taint nodes node-name key=value:tain-effect
+Ex: 
+kubectl taint nodes node1 app=blue:NoSchedule
+
+taint-effect:
+  NoSchedule: pod not been schedule on node
+  PreferNoSchedule: try not put pod on that node but no guarantee
+  NoExecute: new pod will not and exist pod will be evicted
+
+----------------------------------
+add toleration to pod:
+spec:
+  containers:
+  tolerations:
+  - key: "app"
+    operator: "Equal"
+    value: "blue"
+    effect: "NoSchedule"
+-----------------------------------------
+show taint on existing node
+kubectl describe node k8s-head | grep Taint
+------------------------------------------
+remove taint
+kubectl taint nodes master node-role.kubernetes.io/master:NoSchedule-
